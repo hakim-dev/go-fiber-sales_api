@@ -1,9 +1,7 @@
-package controllers
+package controller
 
 import (
 	"fmt"
-	db "go_sales_api/config"
-	"go_sales_api/middleware"
 	"math/rand"
 	"os"
 	"strconv"
@@ -16,6 +14,8 @@ import (
 	"github.com/johnfercher/maroto/pkg/pdf"
 	"github.com/johnfercher/maroto/pkg/props"
 
+	db "go-fiber/config"
+	"go-fiber/middleware"
 	"go-fiber/model"
 )
 

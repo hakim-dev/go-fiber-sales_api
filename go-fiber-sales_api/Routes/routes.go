@@ -1,51 +1,55 @@
 package routes
 
-import "github.com/gofiber/fiber"
+import (
+	"github.com/gofiber/fiber/v2"
+
+	"go-fiber/controller"
+)
 
 func Setup(app *fiber.App) {
 	//authentication routes
-	app.Post("/cashiers/:cashierId/login", controllers.Login)
-	app.Post("/cashiers/:cashierId/logout", controllers.Logout)
-	app.Get("/cashiers/:cashierId/passcode", controllers.Passcode)
+	app.Post("/cashiers/:cashierId/login", controller.Login)
+	app.Post("/cashiers/:cashierId/logout", controller.Logout)
+	app.Get("/cashiers/:cashierId/passcode", controller.Passcode)
 
 	//Cashier routes
-	app.Get("/cashiers", controllers.CashiersList)
-	app.Get("/cashiers/:cashierId", controllers.GetCashierDetails)
-	app.Post("/cashiers", controllers.CreateCashier)
-	app.Delete("/cashiers/:cashierId", controllers.DeleteCashier)
-	app.Put("/cashiers/:cashierId", controllers.UpdateCashier)
+	app.Get("/cashiers", controller.CashiersList)
+	app.Get("/cashiers/:cashierId", controller.GetCashierDetails)
+	app.Post("/cashiers", controller.CreateCashier)
+	app.Delete("/cashiers/:cashierId", controller.DeleteCashier)
+	app.Put("/cashiers/:cashierId", controller.UpdateCashier)
 
 	//Category routes
-	app.Get("/categories", controllers.CategoryList)
-	app.Get("/categories/:categoryId", controllers.GetCategoryDetails)
-	app.Post("/categories", controllers.CreateCategory)
-	app.Delete("/categories/:categoryId", controllers.DeleteCategory)
-	app.Put("/categories/:categoryId", controllers.UpdateCategory)
+	app.Get("/categories", controller.CategoryList)
+	app.Get("/categories/:categoryId", controller.GetCategoryDetails)
+	app.Post("/categories", controller.CreateCategory)
+	app.Delete("/categories/:categoryId", controller.DeleteCategory)
+	app.Put("/categories/:categoryId", controller.UpdateCategory)
 
 	//Products routes
-	app.Get("/products", controllers.ProductList)
-	app.Get("/products/:productId", controllers.GetProductDetails)
-	app.Post("/products", controllers.CreateProduct)
-	app.Delete("/products/:productId", controllers.DeleteProduct)
-	app.Put("/products/:productId", controllers.UpdateProduct)
+	app.Get("/products", controller.ProductList)
+	app.Get("/products/:productId", controller.GetProductDetails)
+	app.Post("/products", controller.CreateProduct)
+	app.Delete("/products/:productId", controller.DeleteProduct)
+	app.Put("/products/:productId", controller.UpdateProduct)
 
 	//Payment routes
-	app.Get("/payments", controllers.PaymentList)
-	app.Get("/payments/:paymentId", controllers.GetPaymentDetails)
-	app.Post("/payments", controllers.CreatePayment)
-	app.Delete("/payments/:paymentId", controllers.DeletePayment)
-	app.Put("/payments/:paymentId", controllers.UpdatePayment)
+	app.Get("/payments", controller.PaymentList)
+	app.Get("/payments/:paymentId", controller.GetPaymentDetails)
+	app.Post("/payments", controller.CreatePayment)
+	app.Delete("/payments/:paymentId", controller.DeletePayment)
+	app.Put("/payments/:paymentId", controller.UpdatePayment)
 
 	//Order routes
-	app.Get("/orders", controllers.OrdersList)
-	app.Get("/orders/:orderId", controllers.OrderDetail)
-	app.Post("/orders", controllers.CreateOrder)
-	app.Post("/orders/subtotal", controllers.SubTotalOrder)
-	app.Get("/orders/:orderId/download", controllers.DownloadOrder)
-	app.Get("/orders/:orderId/check-download", controllers.CheckOrder)
+	app.Get("/orders", controller.OrdersList)
+	app.Get("/orders/:orderId", controller.OrderDetail)
+	app.Post("/orders", controller.CreateOrder)
+	app.Post("/orders/subtotal", controller.SubTotalOrder)
+	app.Get("/orders/:orderId/download", controller.DownloadOrder)
+	app.Get("/orders/:orderId/check-download", controller.CheckOrder)
 
 	//reports
-	app.Get("/revenues", controllers.GetRevenues)
-	app.Get("/solds", controllers.GetSolds)
+	app.Get("/revenues", controller.GetRevenues)
+	app.Get("/solds", controller.GetSolds)
 
 }

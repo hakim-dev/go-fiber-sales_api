@@ -1,10 +1,10 @@
-package controllers
+package controller
 
 import (
 	"log"
 	"strconv"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 
 	db "go-fiber/config"
 	"go-fiber/model"

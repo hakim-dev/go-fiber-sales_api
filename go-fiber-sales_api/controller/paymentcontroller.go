@@ -1,13 +1,14 @@
-package controllers
+package controller
 
 import (
 	"fmt"
 	"log"
 	"strconv"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 
 	db "go-fiber/config"
+	"go-fiber/middleware"
 	"go-fiber/model"
 )
 

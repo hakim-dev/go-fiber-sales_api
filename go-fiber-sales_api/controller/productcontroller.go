@@ -1,12 +1,13 @@
-package controllers
+package controller
 
 import (
 	"fmt"
 	"log"
 	"strconv"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 
+	"go-fiber/middleware"
 	db "go-fiber/config"
 	"go-fiber/model"
 )
@@ -39,52 +40,52 @@ func CreateProduct(c *fiber.Ctx) error {
 		log.Fatalf("Product error in post request %v", err)
 	}
 
-	//fmt.Println("--------------------------------------->")
-	//fmt.Println("------------Creating product with dumy data-----request body data----------->", data)
-	//fmt.Println("--------------------------------------->")
+	fmt.Println("--------------------------------------->")
+	fmt.Println("------------Creating product with dumy data-----request body data----------->", data)
+	fmt.Println("--------------------------------------->")
 
 	var p []model.Product
 	db.DB.Find(&p)
 
-	//fmt.Println("__________________All product------>", p)
+	fmt.Println("__________________All product------>", p)
 
 	//Validation rules
-	//if data.CategoryId == 0 || data.Name == "" || data.Image == "" || data.Stock == 0 || data.Price == 0 {
-	//	return c.Status(400).JSON(fiber.Map{
-	//		"success": false,
-	//		"message": "fields are required",
-	//	})
-	//}
+	if data.CategoryId == 0 || data.Name == "" || data.Image == "" || data.Stock == 0 || data.Price == 0 {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "fields are required",
+		})
+	}
 
-	//fmt.Println("--------------------------------------->")
-	//fmt.Println("------------before validation check----------->")
-	//fmt.Println("--------------------------------------->")
+	fmt.Println("--------------------------------------->")
+	fmt.Println("------------before validation check----------->")
+	fmt.Println("--------------------------------------->")
 
-	//if data.Price <= 0 {
-	//	return c.Status(400).JSON(fiber.Map{
-	//		"success": false,
-	//		"message": "Price field is required",
-	//	})
-	//}
-	//
-	//if data.CategoryId <= 0 {
-	//	return c.Status(400).JSON(fiber.Map{
-	//		"success": false,
-	//		"message": "Category Id field is required",
-	//	})
-	//}
-	//if data.Image == "" {
-	//	return c.Status(400).JSON(fiber.Map{
-	//		"success": false,
-	//		"message": "Image field is required",
-	//	})
-	//}
-	//if data.Stock <= 0 {
-	//	return c.Status(400).JSON(fiber.Map{
-	//		"success": false,
-	//		"message": " Stock field is required",
-	//	})
-	//}
+	if data.Price <= 0 {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "Price field is required",
+		})
+	}
+
+	if data.CategoryId <= 0 {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "Category Id field is required",
+		})
+	}
+	if data.Image == "" {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "Image field is required",
+		})
+	}
+	if data.Stock <= 0 {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": " Stock field is required",
+		})
+	}
 
 	discount := model.Discount{
 		Qty:       data.Discount.Qty,
@@ -93,9 +94,9 @@ func CreateProduct(c *fiber.Ctx) error {
 		ExpiredAt: data.Discount.ExpiredAt,
 	}
 	db.DB.Create(&discount)
-	//fmt.Println("--------------------------------------->")
-	//fmt.Println("------------creating discount----------->", discount)
-	//fmt.Println("--------------------------------------->")
+	fmt.Println("--------------------------------------->")
+	fmt.Println("------------creating discount----------->", discount)
+	fmt.Println("--------------------------------------->")
 
 	product := model.Product{
 		Name:       data.Name,
@@ -107,14 +108,14 @@ func CreateProduct(c *fiber.Ctx) error {
 	}
 	db.DB.Create(&product)
 
-	//fmt.Println("--------------------------------------->")
-	//fmt.Println("------------product db inseration----------->", product)
-	//fmt.Println("--------------------------------------->")
+	fmt.Println("--------------------------------------->")
+	fmt.Println("------------product db inseration----------->", product)
+	fmt.Println("--------------------------------------->")
 
 	db.DB.Table("products").Where("id = ?", product.Id).Update("sku", "SK00"+strconv.Itoa(product.Id))
-	//fmt.Println("--------------------------------------->")
-	//fmt.Println("------------update product with sku----------->", product)
-	//fmt.Println("--------------------------------------->")
+	fmt.Println("--------------------------------------->")
+	fmt.Println("------------update product with sku----------->", product)
+	fmt.Println("--------------------------------------->")
 
 	fmt.Println("--------------------------------------->")
 	fmt.Println("------------Product Creation Done----------->", product.Id)
@@ -220,7 +221,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 		"data":    product,
 	})
 
-
+}
 func ProductList(c *fiber.Ctx) error {
 	//Token authenticate
 	headerToken := c.Get("Authorization")
@@ -406,7 +407,6 @@ func ProductList_Backup(c *fiber.Ctx) error {
 	} else {
 		var count int64
 
-		//
 		db.DB.Where("category_Id = ? AND name= ?", categoryId, productName).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
 
 		var category model.Category

@@ -1,13 +1,14 @@
-package controllers
+package controller
 
 import (
 	"log"
 	"strconv"
 	"strings"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 
 	db "go-fiber/config"
+	"go-fiber/middleware"
 	"go-fiber/model"
 )
 
@@ -144,7 +145,7 @@ func GetSolds(c *fiber.Ctx) error {
 	duplicates := []int{}
 	for _, v := range TotalSolds {
 
-		if contains(duplicates, v.ProductId) == false {
+		if !contains(duplicates, v.ProductId) {
 			duplicates = append(duplicates, v.ProductId)
 		}
 	}

@@ -1,12 +1,14 @@
-package controllers
+package controller
 
 import (
-	db "go-fiber/config"
-	"go-fiber/model"
 	"log"
 	"strconv"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
+
+	"go-fiber/middleware"
+	db "go-fiber/config"
+	"go-fiber/model"
 )
 
 type Category struct {
@@ -31,14 +33,14 @@ func CreateCategory(c *fiber.Ctx) error {
 		Name: data["name"],
 	}
 	db.DB.Create(&category)
-	//result:=db.DB.Create(&category)
+	result := db.DB.Create(&category)
 
-	//if result.RowsAffected == 0 {
-	//	return c.Status(404).JSON(fiber.Map{
-	//		"success": false,
-	//		"Message": "category insertion failed",
-	//	})
-	//}
+	if result.RowsAffected == 0 {
+		return c.Status(404).JSON(fiber.Map{
+			"success": false,
+			"Message": "category insertion failed",
+		})
+	}
 
 	return c.Status(200).JSON(fiber.Map{
 		"success": true,

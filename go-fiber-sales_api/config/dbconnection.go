@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/Valgard/godotenv"
@@ -33,6 +34,9 @@ func Connect() {
 	fmt.Println("connection successful")
 
 	AutoMigrate(db)
+	if err := DB.AutoMigrate(&model.Cashier{}, &model.Category{}, &model.Payment{}, &model.PaymentType{}, &model.Product{}, &model.Discount{}, &model.Order{}).Error; err != nil {
+		log.Fatalf("Migration failed %v", err)
+	}
 
 }
 

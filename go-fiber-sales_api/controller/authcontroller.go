@@ -1,11 +1,12 @@
-package controllers
+package controller
 
 import (
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
 
 	db "go-fiber/config"
 	"go-fiber/model"
